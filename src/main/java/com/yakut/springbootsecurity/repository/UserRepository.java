@@ -6,5 +6,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface UserRepository extends JpaRepository<User, Long> {
-    User getByFirstName(String username);
+    User getByFirstName(String username);// todo мне наверное кажется здесь лучше optional возвращать
 }
