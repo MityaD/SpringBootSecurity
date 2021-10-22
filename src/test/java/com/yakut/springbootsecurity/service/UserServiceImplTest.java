@@ -61,7 +61,7 @@ class UserServiceImplTest {
     }
 
     @Test
-    void deleteUserById() {
+    void deleteUserById() {//todo ты ж писал verify. тебе нужно проверить вызывается ли в товем сервисе метод репозитория
         userService.deleteUserById(any());
     }
 
