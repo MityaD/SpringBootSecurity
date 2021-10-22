@@ -14,7 +14,7 @@ public class Address implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
-    private Long id_address;
+    private Long id_address;//todo шо за зня?
 
     @Column(name = "city")
     private String city;
