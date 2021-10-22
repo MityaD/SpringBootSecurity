@@ -15,7 +15,7 @@ public class UserServiceImpl implements UserService{
 
     private final UserRepository userRepository;
 
-    public UserServiceImpl(UserRepository userRepository) {
+    public UserServiceImpl(UserRepository userRepository) {//todo lombok
         this.userRepository = userRepository;
     }
 
@@ -29,13 +29,13 @@ public class UserServiceImpl implements UserService{
         userRepository.deleteById(id);
     }
 
-    @Transactional
+    @Transactional//todo ???
     @Override
     public List<User> findAllUser() {
         return userRepository.findAll();
     }
 
-    @Transactional
+    @Transactional//todo ???
     @Override
     public User findUserById(Long id) throws NoUserTableException {
         return userRepository.findById(id).orElseThrow(() -> new NoUserTableException(id));
@@ -46,8 +46,8 @@ public class UserServiceImpl implements UserService{
         userRepository.deleteAll();
     }
 
-    @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+    @Override//todo ???
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {// todo зачем оно здесь?....
         return userRepository.getByFirstName(username);
     }
 }
