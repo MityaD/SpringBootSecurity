@@ -56,17 +56,19 @@ class UserServiceImplTest {
                 new User("AAA", "AAAA", 11),
                 new User("BBB", "BBBB", 22)
         );
-        when(userRepository.getByFirstName("AAA")).thenReturn(userList.get(0));
+        when(userRepository.findByFirstName("AAA")).thenReturn(Optional.ofNullable((userList.get(0))));
         assertEquals(userList.get(0), userService.loadUserByUsername("AAA"));
     }
 
     @Test
-    void deleteUserById() {//todo ты ж писал verify. тебе нужно проверить вызывается ли в товем сервисе метод репозитория
-        userService.deleteUserById(any());
+    void deleteUserById(){
+        userService.deleteUserById(1L);
+        verify(userRepository).deleteById(1L);
     }
 
     @Test
     void deleteAll() {
         userService.deleteAll();
+        verify(userRepository).deleteAll();
     }
 }

@@ -1,23 +1,24 @@
 package com.yakut.springbootsecurity.service;
 
+import com.yakut.springbootsecurity.exception.ExceptionByIdUser;
+import com.yakut.springbootsecurity.exception.ExceptionByUserName;
 import com.yakut.springbootsecurity.exception.NoUserTableException;
 import com.yakut.springbootsecurity.model.User;
 import com.yakut.springbootsecurity.repository.UserRepository;
+import lombok.AllArgsConstructor;
+import lombok.SneakyThrows;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
-import javax.transaction.Transactional;
+import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
 @Service
 @Transactional
+@AllArgsConstructor
 public class UserServiceImpl implements UserService{
 
     private final UserRepository userRepository;
-
-    public UserServiceImpl(UserRepository userRepository) {//todo lombok
-        this.userRepository = userRepository;
-    }
 
     @Override
     public User save(User user) {
@@ -29,13 +30,13 @@ public class UserServiceImpl implements UserService{
         userRepository.deleteById(id);
     }
 
-    @Transactional//todo ???
+    @Transactional(readOnly = true)
     @Override
     public List<User> findAllUser() {
         return userRepository.findAll();
     }
 
-    @Transactional//todo ???
+    @Transactional(readOnly = true)
     @Override
     public User findUserById(Long id) throws NoUserTableException {
         return userRepository.findById(id).orElseThrow(() -> new NoUserTableException(id));
@@ -46,8 +47,10 @@ public class UserServiceImpl implements UserService{
         userRepository.deleteAll();
     }
 
-    @Override//todo ???
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {// todo зачем оно здесь?....
-        return userRepository.getByFirstName(username);
+    @SneakyThrows
+    @Transactional(readOnly = true)
+    @Override
+    public UserDetails loadUserByUsername(String username){
+        return userRepository.findByFirstName(username).orElseThrow(ExceptionByUserName::new);
     }
 }
