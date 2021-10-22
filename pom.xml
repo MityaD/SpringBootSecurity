@@ -24,7 +24,7 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-devtools</artifactId>
-            <optional>true</optional>
+            <optional>true</optional> // todo напишешь что это и зачем оно тебе здесь
         </dependency>
 
         <dependency>
